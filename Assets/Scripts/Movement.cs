@@ -8,7 +8,6 @@ public class Movement : MonoBehaviour
     [SerializeField] float gravity = 9.81f;
     [SerializeField] float groundDistance = 1f;
 
-
     public LayerMask groundmask;
 
     bool isGrounded;

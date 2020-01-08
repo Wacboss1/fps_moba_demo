@@ -15,7 +15,7 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         trans = GetComponent<Transform>();
-        playerTrans = GameObject.FindGameObjectWithTag("Player").transform;
+        playerTrans = GameObject.Find("Character").transform;
     }
 
     // Update is called once per frame
