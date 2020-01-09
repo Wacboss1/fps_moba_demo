@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TowerScript : MonoBehaviour
 {
-    [SerializeField] float towerHealth = 100f;
+    [SerializeField] float towerDamage = 5;
 
     GameObject currentTarget;
     Transform[] transforms;
@@ -21,8 +21,12 @@ public class TowerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.DrawLine(turrent.position, currentTarget.transform.position, Color.red);
+        if(currentTarget)
+        {
+            currentTarget.GetComponent<TargetScript>().TakeDamage(towerDamage);
+        }
     }
+
 
     private void OnTriggerStay(Collider other)
     {
