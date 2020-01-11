@@ -8,6 +8,15 @@ public class GunScript : MonoBehaviour
     [SerializeField] float range = 100f;
     [SerializeField] float gunDamage = 10f;
 
+    TargetScript myTargetScript;
+    TargetScript.team myTeam;
+
+    private void Start()
+    {
+        myTargetScript = GetComponent<TargetScript>();
+        myTeam = myTargetScript.getTeam();
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -23,11 +32,15 @@ public class GunScript : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.forward, out hit, range))
         {
-            Debug.DrawRay(transform.position, transform.forward, Color.red);;
             if(hit.transform.gameObject.GetComponent<TargetScript>())
             {
-                hit.transform.gameObject.GetComponent<TargetScript>().TakeDamage(gunDamage);
-                print(hit.transform.gameObject.name + " was hit");
+                TargetScript hitTargetScript = hit.transform.gameObject.GetComponent<TargetScript>();
+
+                if(hitTargetScript.getTeam() != myTeam)
+                {
+                    hitTargetScript.TakeDamage(gunDamage);
+                    print(hit.transform.gameObject.name + " was hit");
+                }
             }
         }
     }

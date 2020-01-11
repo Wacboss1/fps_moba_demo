@@ -3,7 +3,9 @@
 public class TargetScript : MonoBehaviour
 {
     public float Health = 100f;
-    
+    public enum team { Red, Blue};
+
+    public team currentTeam;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,5 +32,10 @@ public class TargetScript : MonoBehaviour
     public void TakeDamage(float amount)
     {
         Health -= amount;
+    }
+
+    public team getTeam()
+    {
+        return currentTeam;
     }
 }

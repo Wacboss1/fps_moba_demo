@@ -9,10 +9,13 @@ public class TowerScript : MonoBehaviour
     GameObject currentTarget;
     Transform[] transforms;
     Transform turrent;
-
+    TargetScript myTargetScript;
+    TargetScript.team myTeam;
     // Start is called before the first frame update
     void Start()
     {
+        myTargetScript = this.GetComponent<TargetScript>();
+        myTeam = myTargetScript.getTeam();
         transforms = this.GetComponentsInChildren<Transform>();
         turrent = transforms[1];
     }
@@ -50,13 +53,21 @@ public class TowerScript : MonoBehaviour
     //targets the closet player to the tower center
     private void AquireTarget(Collider other)
     {
+        TargetScript.team otherTeam = other.GetComponent<TargetScript>().getTeam();
         if (currentTarget == null) //targets first person to enter
         {
-            currentTarget = other.gameObject;
+            if(myTeam != otherTeam) //if they are on the opposite team
+            {
+                currentTarget = other.gameObject;
+            }
+            
         }
-        else if ((Vector3.Distance(transform.position, other.gameObject.transform.position) < Vector3.Distance(transform.position, currentTarget.transform.position)) && other.gameObject.layer == 9) //targets whoever is closest to the middle of the tower
+        else if ((Vector3.Distance(transform.position, other.gameObject.transform.position) < Vector3.Distance(transform.position, currentTarget.transform.position))) //targets whoever is closest to the middle of the tower
         {
-            currentTarget = other.gameObject;
+            if(myTeam != otherTeam)
+            {
+                currentTarget = other.gameObject;
+            }
         }
     }
 }
