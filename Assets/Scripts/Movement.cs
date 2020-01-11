@@ -15,6 +15,7 @@ public class Movement : MonoBehaviour
     GameObject groundChecker;
     Transform groundCheck;
     CharacterController charC;
+
     // Start is called before the first frame update
     void Start()
     {
