@@ -1,20 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class MinionScript : MonoBehaviour
 {
+    [SerializeField] GameObject destination;
     [SerializeField] float speed = 5;
-    CharacterController charC;
+    NavMeshAgent minionNav;
     // Start is called before the first frame update
     void Start()
     {
-        charC = GetComponent<CharacterController>();
+        minionNav = GetComponent<NavMeshAgent>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        charC.Move(transform.forward * speed * Time.deltaTime);
+        minionNav.SetDestination(destination.transform.position);
     }
 }

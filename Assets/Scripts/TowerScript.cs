@@ -33,6 +33,7 @@ public class TowerScript : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
+        print(other.gameObject.name);
         AquireTarget(other);
     }
 
@@ -54,11 +55,13 @@ public class TowerScript : MonoBehaviour
     private void AquireTarget(Collider other)
     {
         TargetScript.team otherTeam = other.GetComponent<TargetScript>().getTeam();
+        print(other.gameObject.name);
         if (currentTarget == null) //targets first person to enter
         {
             if(myTeam != otherTeam) //if they are on the opposite team
             {
                 currentTarget = other.gameObject;
+                print("target is : " + other.gameObject.name);
             }
             
         }

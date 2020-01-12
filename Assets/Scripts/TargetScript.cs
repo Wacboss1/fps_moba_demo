@@ -3,7 +3,7 @@
 public class TargetScript : MonoBehaviour
 {
     public float Health = 100f;
-    public enum team { Red, Blue};
+    public enum team {Red, Blue};
 
     public team currentTeam;
     // Start is called before the first frame update
