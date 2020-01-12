@@ -32,14 +32,17 @@ public class GunScript : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.forward, out hit, range))
         {
-            if(hit.transform.gameObject.GetComponent<TargetScript>())
+            if(hit.collider.isTrigger == false)
             {
-                TargetScript hitTargetScript = hit.transform.gameObject.GetComponent<TargetScript>();
-
-                if(hitTargetScript.getTeam() != myTeam)
+                if (hit.transform.gameObject.GetComponent<TargetScript>())
                 {
-                    hitTargetScript.TakeDamage(gunDamage);
-                    print(hit.transform.gameObject.name + " was hit");
+                    TargetScript hitTargetScript = hit.transform.gameObject.GetComponent<TargetScript>();
+
+                    if (hitTargetScript.getTeam() != myTeam)
+                    {
+                        hitTargetScript.TakeDamage(gunDamage);
+                        print(hit.transform.gameObject.name + " was hit");
+                    }
                 }
             }
         }
