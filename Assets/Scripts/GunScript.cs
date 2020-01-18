@@ -32,6 +32,7 @@ public class GunScript : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.forward, out hit, range))
         {
+            //TODO make this a list that hits objects that are not triggers
             if(hit.collider.isTrigger == false)
             {
                 if (hit.transform.gameObject.GetComponent<TargetScript>())
