@@ -3,9 +3,10 @@
 public class TargetScript : MonoBehaviour
 {
     public float Health = 100f;
-    public enum team {Red, Blue};
+    public enum Team {Red, Blue};
 
-    public team currentTeam;
+    [SerializeField] bool isImmune;
+    [SerializeField] Team currentTeam;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,12 +30,21 @@ public class TargetScript : MonoBehaviour
             print(this.gameObject.name + " has died");
         }
     }
+
     public void TakeDamage(float amount)
     {
-        Health -= amount;
+        if (!isImmune)
+        {
+            Health -= amount;
+        }
     }
 
-    public team getTeam()
+    public void setImmune(bool immunity)
+    {
+        isImmune = immunity;
+    }
+
+    public Team getTeam()
     {
         return currentTeam;
     }

@@ -22,6 +22,7 @@ public class Movement : MonoBehaviour
         charC = GetComponent<CharacterController>();
         groundChecker = GameObject.Find("GroundChecker");
         groundCheck = groundChecker.transform;
+        print(gameObject.name);
     }
 
     // Update is called once per frame

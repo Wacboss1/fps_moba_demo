@@ -5,13 +5,18 @@ using UnityEngine;
 public class TowerScript : MonoBehaviour
 {
     [SerializeField] float towerDamage = 5;
+    [SerializeField] bool immune = true;
 
     GameObject currentTarget;
     Transform[] transforms;
     Transform turrent;
     TargetScript myTargetScript;
-    TargetScript.team myTeam;
+    TargetScript.Team myTeam;
     TargetAquisistionScript myTargetAq;
+
+    /*
+    *Towers will have a sheild that goes down whenever an enemy enters the tower range
+     */
 
     // Start is called before the first frame update
     void Start()
@@ -29,12 +34,21 @@ public class TowerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        currentTarget = myTargetAq.getCurrentTarget();
-        if(currentTarget)
+        if(myTargetAq.getCurrentTarget())
         {
-            currentTarget.GetComponent<TargetScript>().TakeDamage(towerDamage);
+            /*
+             * Whenever an enemy is target by the tower
+             *  the towers sheilds will go down and the tower will deal damage to that things
+             */
+            myTargetScript.setImmune(false);
+            myTargetAq.getCurrentTarget().GetComponent<TargetScript>().TakeDamage(towerDamage);
+        }
+        else
+        {
+            //otherwise the tower is immune to damage 
+            myTargetScript.setImmune(true);
         }
     }
 
-    //TODO determine if tower force feilds should be a thing
+
 }

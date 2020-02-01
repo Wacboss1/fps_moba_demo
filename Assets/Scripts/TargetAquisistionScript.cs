@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class TargetAquisistionScript : MonoBehaviour
 {
-    GameObject currentTarget;
+    GameObject currentTarget = null;
     TargetScript myTargetScript;
-    TargetScript.team myTeam;
+    TargetScript.Team myTeam;
 
     private void Start()
     {
@@ -16,7 +16,7 @@ public class TargetAquisistionScript : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        print(other.gameObject.name);
+        //print(other.gameObject.name);
         AquireTarget(other);
     }
 
@@ -37,7 +37,7 @@ public class TargetAquisistionScript : MonoBehaviour
     //targets the closet player to the tower center
     private void AquireTarget(Collider other)
     {
-        TargetScript.team otherTeam = other.GetComponent<TargetScript>().getTeam();
+        TargetScript.Team otherTeam = other.GetComponent<TargetScript>().getTeam();
         print(other.gameObject.name);
         if (currentTarget == null) //targets first person to enter
         {
