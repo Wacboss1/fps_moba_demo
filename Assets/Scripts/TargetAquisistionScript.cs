@@ -7,7 +7,7 @@ public class TargetAquisistionScript : MonoBehaviour
     GameObject currentTarget = null;
     TargetScript myTargetScript;
     TargetScript.Team myTeam;
-
+    TargetScript.Team otherTeam;
     private void Start()
     {
         myTargetScript = gameObject.GetComponent<TargetScript>();
@@ -16,7 +16,6 @@ public class TargetAquisistionScript : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        //print(other.gameObject.name);
         AquireTarget(other);
     }
 
@@ -37,9 +36,13 @@ public class TargetAquisistionScript : MonoBehaviour
     //targets the closet player to the tower center
     private void AquireTarget(Collider other)
     {
-        TargetScript.Team otherTeam = other.GetComponent<TargetScript>().getTeam();
-        print(other.gameObject.name);
-        if (currentTarget == null) //targets first person to enter
+        //TODO find a good way of checking that things are not null
+        if (other.gameObject.GetComponent<TargetScript>())
+        {
+            otherTeam = other.GetComponent<TargetScript>().getTeam();
+        }
+        
+        if (currentTarget) //targets first person to enter
         {
             if (myTeam != otherTeam) //if they are on the opposite team
             {
@@ -47,12 +50,14 @@ public class TargetAquisistionScript : MonoBehaviour
                 print("target is : " + other.gameObject.name);
             }
 
-        }
-        else if ((Vector3.Distance(transform.position, other.gameObject.transform.position) < Vector3.Distance(transform.position, currentTarget.transform.position))) //targets whoever is closest to the middle of the tower
-        {
-            if (myTeam != otherTeam)
+        } else if (other.gameObject && currentTarget) {
+            if (Vector3.Distance(this.transform.position, other.gameObject.transform.position) < Vector3.Distance(this.transform.position, currentTarget.transform.position))
             {
-                currentTarget = other.gameObject;
+                //targets whoever is closest to the middle of the tower
+                if (myTeam != otherTeam)
+                {
+                    currentTarget = other.gameObject;
+                }
             }
         }
     }

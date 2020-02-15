@@ -5,7 +5,6 @@ using UnityEngine;
 public class TowerScript : MonoBehaviour
 {
     [SerializeField] float towerDamage = 5;
-    [SerializeField] bool immune = true;
 
     GameObject currentTarget;
     Transform[] transforms;
@@ -34,17 +33,17 @@ public class TowerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(myTargetAq.getCurrentTarget())
+        if(myTargetAq.getCurrentTarget()) 
         {
             /*
              * Whenever an enemy is target by the tower
              *  the towers sheilds will go down and the tower will deal damage to that things
+             *  
+             *  once the sheilds are down the tower can be targeted from outside tower range
              */
             myTargetScript.setImmune(false);
             myTargetAq.getCurrentTarget().GetComponent<TargetScript>().TakeDamage(towerDamage);
-        }
-        else
-        {
+        } else {
             //otherwise the tower is immune to damage 
             myTargetScript.setImmune(true);
         }

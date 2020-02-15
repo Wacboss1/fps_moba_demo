@@ -14,10 +14,12 @@ GameObject:
   - component: {fileID: 3816517436861644543}
   - component: {fileID: 3816517436861644542}
   - component: {fileID: 3816517436861644541}
+  - component: {fileID: 5058700002116121083}
   - component: {fileID: 3816517436861644531}
   - component: {fileID: 3816517436861644529}
+  - component: {fileID: 8169862784577577673}
   m_Layer: 9
-  m_Name: Minion
+  m_Name: R_Minion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -135,6 +137,19 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: 0}
+--- !u!135 &5058700002116121083
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3816517436861644540}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 2
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3816517436861644531
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,7 +163,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 0}
-  speed: 5
+  minionDamage: 5
 --- !u!114 &3816517436861644529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,4 +177,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Health: 100
+  isImmune: 0
   currentTeam: 0
+--- !u!114 &8169862784577577673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3816517436861644540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2e908c10cab38c4fa718b561bad197d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

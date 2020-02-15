@@ -13,8 +13,8 @@ public class GunScript : MonoBehaviour
 
     private void Start()
     {
-        myTargetScript = this.GetComponent<TargetScript>();
-        myTeam = myTargetScript.getTeam();
+        myTargetScript = GetComponent<TargetScript>();
+        myTeam = GetComponent<TargetScript>().getTeam();
     }
 
     // Update is called once per frame
