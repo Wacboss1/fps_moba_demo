@@ -26,7 +26,7 @@ public class MinionScript : MonoBehaviour
             currentTarget = myTargetAq.getCurrentTarget();
         }
         minionNav.SetDestination(destination.transform.position);
-        if (currentTarget)
+        if ((currentTarget != null) && currentTarget.GetComponent<TargetScript>() != null)
         {
             currentTarget.GetComponent<TargetScript>().TakeDamage(minionDamage);
         }

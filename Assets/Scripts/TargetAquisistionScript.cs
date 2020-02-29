@@ -37,23 +37,23 @@ public class TargetAquisistionScript : MonoBehaviour
     private void AquireTarget(Collider other)
     {
         //TODO find a good way of checking that things are not null
-        if (other.gameObject.GetComponent<TargetScript>())
+        if (other.gameObject.GetComponent<TargetScript>() != null)
         {
             otherTeam = other.GetComponent<TargetScript>().getTeam();
         }
-        
-        if (currentTarget) //targets first person to enter
+        if (currentTarget == null) //targets first person to enter
         {
             if (myTeam != otherTeam) //if they are on the opposite team
             {
                 currentTarget = other.gameObject;
                 print("target is : " + other.gameObject.name);
             }
-
-        } else if (other.gameObject && currentTarget) {
+        }
+        else if (other.gameObject && currentTarget)
+        {
             if (Vector3.Distance(this.transform.position, other.gameObject.transform.position) < Vector3.Distance(this.transform.position, currentTarget.transform.position))
             {
-                //targets whoever is closest to the middle of the tower
+                //targets whoever is closest to the middle gameObject
                 if (myTeam != otherTeam)
                 {
                     currentTarget = other.gameObject;
@@ -61,6 +61,5 @@ public class TargetAquisistionScript : MonoBehaviour
             }
         }
     }
-
     public GameObject getCurrentTarget() { return currentTarget; }
 }
