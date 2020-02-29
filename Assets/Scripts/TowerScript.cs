@@ -33,7 +33,7 @@ public class TowerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(myTargetAq.getCurrentTarget()) 
+        if(myTargetAq.getCurrentTarget() != null) 
         {
             /*
              * Whenever an enemy is target by the tower
