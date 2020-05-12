@@ -6,6 +6,7 @@ public class TargetAquisistionScript : MonoBehaviour
 {
     GameObject currentTarget = null;
     TargetScript myTargetScript;
+    TargetScript othersTargetScript;
     TargetScript.Team myTeam;
     TargetScript.Team otherTeam;
     private void Start()
@@ -18,19 +19,20 @@ public class TargetAquisistionScript : MonoBehaviour
     {
         AquireTarget(other);
     }
-
+    
+    //Stops Targeting when player leaves tower range
     private void OnTriggerExit(Collider other)
     {
         UnaquireTarget(other);
     }
 
-    //Stops Targeting when player leaves tower range
+    //checks if the object leaving the range is the current target
     private void UnaquireTarget(Collider other)
     {
         if (other.gameObject == currentTarget)
         {
             currentTarget = null;
-        }
+        } 
     }
 
     //targets the closet player to the tower center
@@ -39,18 +41,17 @@ public class TargetAquisistionScript : MonoBehaviour
         //TODO find a good way of checking that things are not null
         if (other.gameObject.GetComponent<TargetScript>() != null)
         {
+            othersTargetScript = other.GetComponent<TargetScript>();
             otherTeam = other.GetComponent<TargetScript>().getTeam();
         }
+
         if (currentTarget == null) //targets first person to enter
         {
             if (myTeam != otherTeam) //if they are on the opposite team
             {
                 currentTarget = other.gameObject;
-                print("target is : " + other.gameObject.name);
             }
-        }
-        else if (other.gameObject && currentTarget)
-        {
+        } else if (other.gameObject && currentTarget) {
             if (Vector3.Distance(this.transform.position, other.gameObject.transform.position) < Vector3.Distance(this.transform.position, currentTarget.transform.position))
             {
                 //targets whoever is closest to the middle gameObject
@@ -59,7 +60,18 @@ public class TargetAquisistionScript : MonoBehaviour
                     currentTarget = other.gameObject;
                 }
             }
+        } else if (othersTargetScript.checkDead()) {
+            currentTarget = null;
         }
     }
     public GameObject getCurrentTarget() { return currentTarget; }
+
+/*    public TargetScript.Team getOtherTeam()
+    {
+        if(myTeam == TargetScript.Team.Red)
+        {
+            return TargetScript.Team.Blue;
+        }
+        return TargetScript.Team.Red;
+    }*/
 }

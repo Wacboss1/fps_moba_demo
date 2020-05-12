@@ -7,10 +7,12 @@ public class MinionScript : MonoBehaviour
 {
     [SerializeField] GameObject destination;
     [SerializeField] float minionDamage = 5;
+    [SerializeField] float attackper = 1;
     private GameObject currentTarget;
     private GameObject mainDestination;
     private NavMeshAgent minionNav;
     private TargetAquisistionScript myTargetAq;
+    private bool attacking = false;
 
     // Start is called before the first frame update
     void Start()
@@ -27,21 +29,32 @@ public class MinionScript : MonoBehaviour
         if (myTargetAq.getCurrentTarget())
         {
             currentTarget = myTargetAq.getCurrentTarget();
-            if (!currentTarget.activeSelf)
+            if (currentTarget.GetComponent<TargetScript>())
             {
-                destination = mainDestination;
-            }else{
-                destination = currentTarget;
+                if (currentTarget.GetComponent<TargetScript>().checkDead())
+                {
+                    destination = mainDestination;
+                } else {
+                    destination = currentTarget;
+                }
             }
         }
         minionNav.SetDestination(destination.transform.position);
         // TODO switch currentTarget back to mainTarget kill.
-        if ((currentTarget != null) && currentTarget.GetComponent<TargetScript>() != null)
+        if ((currentTarget != null) && currentTarget.GetComponent<TargetScript>() != null && !attacking)
         {
-            currentTarget.GetComponent<TargetScript>().TakeDamage(minionDamage);
+            StartCoroutine(attack());
+            attacking = true;
         } else
         {
             destination = mainDestination;
         }
+    }
+    // TODO get the minions to focus each other then attack the next tower
+    private IEnumerator attack()
+    {
+        currentTarget.GetComponent<TargetScript>().TakeDamage(minionDamage);
+        yield return new WaitForSeconds(attackper);
+        attacking = false;
     }
 }

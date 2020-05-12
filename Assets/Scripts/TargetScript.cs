@@ -7,7 +7,7 @@ public class TargetScript : MonoBehaviour
 
     [SerializeField] bool isImmune;
     [SerializeField] Team currentTeam;
-
+    private bool isDead = false;
     // Update is called once per frame
     void Update()
     {
@@ -22,6 +22,7 @@ public class TargetScript : MonoBehaviour
             {
                 this.gameObject.SetActive(false);
             }
+            isDead = true;
             print(this.gameObject.name + " has died");
         }
     }
@@ -30,7 +31,10 @@ public class TargetScript : MonoBehaviour
     {
         if (!isImmune)
         {
-            Health -= amount;
+            if(Health > 0)
+            {
+                Health -= amount;
+            }
         }
     }
 
@@ -42,5 +46,10 @@ public class TargetScript : MonoBehaviour
     public Team getTeam()
     {
         return currentTeam;
+    }
+
+    public bool checkDead()
+    {
+        return isDead;
     }
 }

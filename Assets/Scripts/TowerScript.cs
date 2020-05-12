@@ -5,13 +5,13 @@ using UnityEngine;
 public class TowerScript : MonoBehaviour
 {
     [SerializeField] float towerDamage = 5;
-
-    GameObject currentTarget;
-    Transform[] transforms;
-    Transform turrent;
-    TargetScript myTargetScript;
-    TargetScript.Team myTeam;
-    TargetAquisistionScript myTargetAq;
+    [SerializeField] float attackper = 1;
+    private GameObject currentTarget;
+    private Transform[] transforms;
+    private Transform turrent;
+    private TargetScript myTargetScript;
+    private TargetScript.Team myTeam;
+    private TargetAquisistionScript myTargetAq;
 
     /*
     *Towers will have a sheild that goes down whenever an enemy enters the tower range
@@ -33,7 +33,11 @@ public class TowerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(myTargetAq.getCurrentTarget() != null) 
+        if (currentTarget)
+        {
+            print(this.name + " Target is " + currentTarget.name);
+        }
+        if (myTargetAq.getCurrentTarget() != null) 
         {
             /*
              * Whenever an enemy is target by the tower
@@ -42,11 +46,20 @@ public class TowerScript : MonoBehaviour
              *  once the sheilds are down the tower can be targeted from outside tower range
              */
             myTargetScript.setImmune(false);
-            myTargetAq.getCurrentTarget().GetComponent<TargetScript>().TakeDamage(towerDamage);
+            StartCoroutine(shootAndRecharge());
+            StopCoroutine(shootAndRecharge());
         } else {
             //otherwise the tower is immune to damage 
             myTargetScript.setImmune(true);
         }
+    }
+
+    IEnumerator shootAndRecharge()
+    {
+        //print("attacking @ " + Time.time);
+        yield return new WaitForSeconds(attackper);
+        myTargetAq.getCurrentTarget().GetComponent<TargetScript>().TakeDamage(towerDamage);
+        //print("ready to attack @" + Time.time);
     }
 
 
