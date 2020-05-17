@@ -8,7 +8,7 @@ public class MinionScript : MonoBehaviour
     [SerializeField] GameObject destination;
     [SerializeField] float minionDamage = 5;
     [SerializeField] float attackper = 1;
-    private GameObject currentTarget;
+    public GameObject currentTarget;
     private GameObject mainDestination;
     private NavMeshAgent minionNav;
     private TargetAquisistionScript myTargetAq;
@@ -19,7 +19,7 @@ public class MinionScript : MonoBehaviour
     {
         minionNav = GetComponent<NavMeshAgent>();
         myTargetAq = GetComponent<TargetAquisistionScript>();
-        mainDestination = destination;
+        mainDestination = destination; ;
 
     }
 
@@ -29,15 +29,9 @@ public class MinionScript : MonoBehaviour
         if (myTargetAq.getCurrentTarget())
         {
             currentTarget = myTargetAq.getCurrentTarget();
-            if (currentTarget.GetComponent<TargetScript>())
-            {
-                if (currentTarget.GetComponent<TargetScript>().checkDead())
-                {
-                    destination = mainDestination;
-                } else {
-                    destination = currentTarget;
-                }
-            }
+            destination = currentTarget;
+        } else if (currentTarget == null) {
+            destination = mainDestination;
         }
         minionNav.SetDestination(destination.transform.position);
         // TODO switch currentTarget back to mainTarget kill.

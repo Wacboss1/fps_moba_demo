@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class TargetAquisistionScript : MonoBehaviour
 {
-    GameObject currentTarget = null;
-    TargetScript myTargetScript;
-    TargetScript othersTargetScript;
-    TargetScript.Team myTeam;
+    private GameObject currentTarget = null;
+    private TargetScript myTargetScript;
+    private TargetScript othersTargetScript;
+    private TargetScript.Team myTeam;
     TargetScript.Team otherTeam;
     private void Start()
     {
@@ -15,6 +15,14 @@ public class TargetAquisistionScript : MonoBehaviour
         myTeam = myTargetScript.getTeam();
     }
 
+    private void Update()
+    {
+        if (!currentTarget.activeSelf)
+        {
+            print("unlocking");
+            currentTarget = null;
+        }
+    }
     private void OnTriggerStay(Collider other)
     {
         AquireTarget(other);
@@ -39,29 +47,31 @@ public class TargetAquisistionScript : MonoBehaviour
     private void AquireTarget(Collider other)
     {
         //TODO find a good way of checking that things are not null
-        if (other.gameObject.GetComponent<TargetScript>() != null)
+        if (other.gameObject.layer == 9)
         {
             othersTargetScript = other.GetComponent<TargetScript>();
             otherTeam = other.GetComponent<TargetScript>().getTeam();
-        }
 
-        if (currentTarget == null) //targets first person to enter
-        {
-            if (myTeam != otherTeam) //if they are on the opposite team
+            if (currentTarget == null) //targets first person to enter
             {
-                currentTarget = other.gameObject;
-            }
-        } else if (other.gameObject && currentTarget) {
-            if (Vector3.Distance(this.transform.position, other.gameObject.transform.position) < Vector3.Distance(this.transform.position, currentTarget.transform.position))
-            {
-                //targets whoever is closest to the middle gameObject
-                if (myTeam != otherTeam)
+                if (myTeam != otherTeam) //if they are on the opposite team
                 {
                     currentTarget = other.gameObject;
                 }
             }
-        } else if (othersTargetScript.checkDead()) {
-            currentTarget = null;
+            else if (other.gameObject && currentTarget)
+            {
+
+                if (Vector3.Distance(this.transform.position, other.gameObject.transform.position) < Vector3.Distance(this.transform.position, currentTarget.transform.position))
+                {
+                    //targets whoever is closest to the middle gameObject
+                    if (myTeam != otherTeam)
+                    {
+                        currentTarget = other.gameObject;
+                    }
+                }
+
+            }
         }
     }
     public GameObject getCurrentTarget() { return currentTarget; }
