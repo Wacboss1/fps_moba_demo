@@ -61,6 +61,4 @@ public class TowerScript : MonoBehaviour
         myTargetAq.getCurrentTarget().GetComponent<TargetScript>().TakeDamage(towerDamage);
         //print("ready to attack @" + Time.time);
     }
-
-
 }
